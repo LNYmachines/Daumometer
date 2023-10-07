@@ -1,10 +1,15 @@
 import pygame
 import math
+from flask import Flask, request, abort
+app = Flask(__name__)
+import threading
 pygame.init()
 screen = pygame.display.set_mode((900, 900))
 clock = pygame.time.Clock()
 
-
+def get_angle_from_percentage(percentage):
+    angle =  180 + percentage * 180 / 100 
+    return angle 
 
 
 def blitRotate(surf, image, pos, originPos, angle):
@@ -56,6 +61,27 @@ def dynamic_anlge(target_angle, start_angle, t, damping):
 
 done = False
 t=0
+
+my_thread = threading.Thread(target=app.run, args=["0.0.0.0"], daemon=True)
+my_thread.start()
+
+@app.route("/percentage")
+def get_percentage():
+    global target_angle
+    global damping
+    global t
+    percentage = request.args.get("percentage")
+    print(percentage)
+    try:
+        percentage_float = float(percentage)
+        target_angle = get_angle_from_percentage(percentage_float)
+        damping = 1
+        t=0
+    except TypeError:
+
+        abort(400)
+    return "ok"
+
 while not done:
     clock.tick(60)
     for event in pygame.event.get():
