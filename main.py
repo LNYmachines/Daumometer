@@ -80,6 +80,17 @@ while not done:
                 start_angle = -0
                 damping = 1
                 t=0
+            if event.key == pygame.K_LEFT:
+                target_angle = 270
+                start_angle = -0
+                damping = 1
+                t=0
+            if event.key == pygame.K_RIGHT:
+                target_angle = 90
+                start_angle = -0
+                damping = 1
+                t=0
+
 
 
     pos = (screen.get_width() / 2, screen.get_height() / 2)
