@@ -65,7 +65,7 @@ t=0
 my_thread = threading.Thread(target=app.run, args=["0.0.0.0"], daemon=True)
 my_thread.start()
 
-@app.route("/percentage")
+@app.route("/")
 def get_percentage():
     global target_angle
     global damping
